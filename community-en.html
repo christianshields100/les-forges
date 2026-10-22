@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What changes at my address · Les Forges de la Janais</title>
+<meta name="description" content="What changes at my address: type an address in the three communes and see distance, visibility, night noise, the construction route and what the heat network saves you. Then one screen per concern.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Les Forges de la Janais <small>La Janais, Rennes</small></a>
+    <nav class="menu" aria-label="Sections">
+      <a href="process.html">Process</a>
+      <a href="community-en.html" aria-current="page">What the community sees</a>
+      <a href="becomes.html">What it becomes</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compact">
+  <div class="wrap">
+    <nav class="lang" aria-label="Language"><a href="community.html" lang="fr" hreflang="fr">Français</a><a href="community-en.html" aria-current="page" lang="en">English</a></nav>
+    <p class="place"><span class="dot" aria-hidden="true"></span> Design what the community sees · how residents are impacted</p>
+    <h1>What changes at my address</h1>
+    <p class="lede">It brings its own power, heats your homes for less than gas, pays at least €1M a year into a fund residents and their communes run, and gives the lot facing your houses back as a park. Type an address in Chartres-de-Bretagne, Saint-Jacques-de-la-Lande or Noyal-Châtillon-sur-Seiche and see what it means for your home, in numbers you can check.</p>
+    <div class="tool">
+      <div class="f">
+        <form id="af" role="search">
+          <label class="sr" for="addr">Your address</label>
+          <input type="search" id="addr" name="a" placeholder="12 rue du Manoir, Saint-Jacques-de-la-Lande" autocomplete="street-address" autocapitalize="words" spellcheck="false" required>
+          <button class="btn primary" type="submit">Show me</button>
+        </form>
+        <div class="examples"><span>Try</span><button type="button" data-q="rue du Manoir, Saint-Jacques-de-la-Lande">rue du Manoir</button><button type="button" data-q="le Bois Noir, Chartres-de-Bretagne">le Bois Noir</button><button type="button" data-q="avenue de la Marionnais, Chartres-de-Bretagne">avenue de la Marionnais, Chartres</button></div>
+        <p class="status" id="status" aria-live="polite"></p>
+      </div>
+      <div class="m">
+        <div id="map" class="map" role="region" aria-label="Map of the campus, the construction route and your address"></div>
+        <p class="small muted" style="margin-top:8px">Aerial: IGN. Lots from the cadastre; buildings and station at their site-plan positions; the construction route on the IGN road network. Nothing you type is stored.</p>
+      </div>
+      <div class="results" id="results" hidden aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band surface tight">
+  <div class="wrap">
+    <div class="strip" role="list" aria-label="The eight commitments">
+      <div role="listitem" class="lead"><div class="v num">0<span class="u">MW</span></div><div class="k">imported from the Breton grid</div></div>
+      <div role="listitem" class="lead"><div class="v num">~20,000</div><div class="k">gas-heated homes' worth of heat (derived): the three communes first, then neighbors, never dearer than gas</div></div>
+      <div role="listitem"><div class="v num">10,000<span class="u">m³</span></div><div class="k">of water a year at most, none for cooling</div></div>
+      <div role="listitem" class="lead"><div class="v num">40<span class="u">dB(A)</span></div><div class="k">at most from the campus alone at the nearest home at night, the WHO outdoor night guideline; and no more than 3 dB(A) above the background measured before construction</div></div>
+      <div role="listitem"><div class="v num">~320</div><div class="k">jobs in total (derived), ~80 on the payroll, academy on site</div></div>
+      <div role="listitem"><div class="v num">16<span class="u">ha</span></div><div class="k">in three empty lots; everything built on 5.5 ha, 3.7 ha a public park</div></div>
+      <div role="listitem" class="lead"><div class="v num">€1M<span class="u">+ a year</span></div><div class="k">into a local benefit fund residents and their communes run, for the life of the campus, plus €5M at financial close</div></div>
+      <div role="listitem"><div class="v num">~530<span class="u">kt CO₂</span></div><div class="k">a year on gas running the campus, up to 890 kt when exporting (derived), published every year; biomethane 50% of the fuel by 2035, bought with guarantees of origin</div></div>
+    </div>
+    <p class="small muted" style="margin-top:14px">One screen per worry below: noise and the view, water, power, heat and your bill, jobs and skills, construction and the school. Figures marked derived stay labelled until a specialist confirms them.</p>
+  </div>
+</section>
+
+<section class="band" id="commitments">
+  <div class="wrap">
+    <h2>The eight commitments</h2>
+    <p class="intro">Each is a number, each has a meter. They are the same eight on every page of this site. Where to come and when, week by week, is on the <a href="process.html">process page</a>.</p>
+    <div class="tablewrap" style="margin-top:24px">
+      <table class="commit" aria-label="The eight commitments">
+        <thead><tr><th>Commitment</th><th>Number</th><th>How it is checked</th><th>Depends on</th></tr></thead>
+        <tbody>
+          <tr><td>Power</td><td>0 MW imported; 0 to 80 MW exported, depending on station availability</td><td data-l="How it is checked">The grid operator's meter, monthly</td><td data-l="Depends on">RTE (the 90 kV connection); GRTgaz</td></tr>
+          <tr><td>Heat</td><td>Every home offered a connection, up to 300 GWh a year by phase 2, about 20,000 gas-heated homes' worth (derived); the nearest streets at the lower of €54/MWh or 50% of the gas price for 15 years; phase 1 30% below the gas bill; everyone else at least 10% below; subject to the Rennes Métropole concession</td><td data-l="How it is checked">Network tariff published; connections counted; a bill comparison every year</td><td data-l="Depends on">The Rennes Métropole concession; ENGIE and the factory; the biomethane supply</td></tr>
+          <tr><td>Water</td><td>Under 10,000 m³ a year, none for cooling</td><td data-l="How it is checked">Intake meter, published</td><td data-l="Depends on">Nothing outside the campus</td></tr>
+          <tr><td>Quiet</td><td>At night the campus may add at most 3 dB(A) to the background measured at your façade before construction, and its own sound never exceeds 40 dB(A), whichever is stricter (derived target; acoustician confirms before the permit).</td><td data-l="How it is checked">The night background is measured at the façade before construction; after opening the acoustician measures the campus's contribution with everything running (residual-level method, NF S31-010) and publishes it every three months.</td><td data-l="Depends on">The homeowner whose façade carries the meter; the acoustician</td></tr>
+          <tr><td>Jobs</td><td>About 80 on the payroll, about 320 in total (derived); a target of half the hires from the area, published every year; the academy</td><td data-l="How it is checked">Annual headcount by postcode</td><td data-l="Depends on">Rennes Métropole (Bâtiment 78)</td></tr>
+          <tr><td>Carbon</td><td>About 530,000 t CO₂ a year on gas, campus only, up to 890,000 with full export (derived); biomethane 20% of the fuel at opening, 50% by 2035, bought under contract with guarantees of origin on the national market, the share published every year</td><td data-l="How it is checked">Annual report from audited fuel invoices</td><td data-l="Depends on">The biomethane supply contract</td></tr>
+          <tr><td>Land</td><td>16 ha in three empty lots: everything built on AC 0705 (5.5 ha); AC 0710 (6.1 ha) holds no building; 3.7 ha of AC 0541 a public park; the factory untouched; nearest homes 200 m from the park lot and 400 m from the nearest building, the station 520 m from the nearest home (measured)</td><td data-l="How it is checked">Site plan in the permit; the park's opening date written into it</td><td data-l="Depends on">Rennes Métropole and the ZAC La Janais developer (sale of AC 0705); the factory owner (release of AC 0541 and AC 0710, park access)</td></tr>
+          <tr><td>Share</td><td>At least €1M a year to a local benefit fund for the life of the campus, plus €5M at financial close; residents and communes own the heat co-op; a 3.7 ha public park and a school energy lab at Bâtiment 78</td><td data-l="How it is checked">The fund's accounts and the co-op's register of members, published every year; the park's opening date written into the permit</td><td data-l="Depends on">Legal drafting (fund, covenant); Rennes Métropole (concession, Bâtiment 78); the factory owner (park access)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="charter wide" id="charter">
+      <h3>The neighbors' charter</h3>
+      <p class="muted">For every household on the nearest streets, within about 1 km of the lots, and, for its construction clauses, every household within 300 m of the D34 approach. Signed by the operating company and the household; countersigned by the commune.</p>
+      <ol>
+        <li>At night the campus may add at most 3 dB(A) to the background measured at your façade before construction, and its own sound never exceeds 40 dB(A), whichever is stricter (derived target; acoustician confirms before the permit). The night background is measured at the façade before construction; after opening the acoustician measures the campus's contribution with everything running (residual-level method, NF S31-010) and publishes it every three months.</li>
+        <li>You are first in line for the heat network, at the lower of €54 per MWh or 50% of the gas price, for 15 years (derived; confirmed before the permit application is filed; subject to the Rennes Métropole concession).</li>
+        <li>No construction lorry uses the streets of Saint-Jacques-de-la-Lande or the D177; traffic comes from the south on the D34, 7:00 to 19:00 on weekdays.</li>
+        <li>If your home is within 300 m of the D34 approach, lorries will pass you. For those homes the charter adds a speed limit, a wheel wash at the site exit, dust and noise monitoring on the D34 published live, and the same 48-hour contact.</li>
+        <li>A named person answers you within 48 hours, by phone or at the office on the industrial site.</li>
+        <li>You hold a seat on the monitoring committee. What the committee can stop is agreed with you in week 3, before signing.</li>
+        <li>Your view is rendered before work starts, and the planted edge facing your street is kept for the life of the campus.</li>
+        <li>Anonymised sales within 1 km are published every year. If you put your home up for sale, an independent valuation is paid for by the campus.</li>
+        <li>Your household gets a founding share in the heat co-op, paid by the campus company, and a vote for the fund's resident board seats.</li>
+      </ol>
+      <p class="sign">Draft text, on the table in the week 2 workshop. Residents' edits go into the change log. The €54 price and the 40 dB(A) ceiling are derived; both are confirmed before the permit application is filed, and a household that has signed can withdraw if either changes. Depends on: the commune (countersignature); the Rennes Métropole concession (the heat price); the homeowner whose façade carries the meter; legal drafting (the fund's share purchase).</p>
+  </div>
+</section>
+
+<section class="band surface" id="owns">
+  <div class="wrap split">
+    <div>
+      <h2>What you own and what you can use</h2>
+      <p class="intro">Four things that are yours, not the campus's. The terms are on <a href="stake.html">What the community owns</a>.</p>
+    </div>
+    <div class="four">
+      <a href="stake.html#fund"><span><strong>A fund you run.</strong> At least €1M a year for the life of the campus, €5M at financial close, €250k a year during construction. Eight board seats, six held by residents and the communes. Audited accounts every year.</span><span>fund</span></a>
+      <a href="stake.html#coop"><span><strong>A heat co-op you own.</strong> €50 a share, one member one vote, 25 to 49% of the company that runs the network, a vote on each year's price. If you live in the charter zone, the campus company pays for your first share.</span><span>co-op</span></a>
+      <a href="stake.html#park"><span><strong>A park you can walk in.</strong> 3.7 ha of the lot facing the nearest houses, planted, open daily, with a winter garden heated by the campus. Open before the first building is switched on (subject to the factory owner releasing the lot and to Rennes Métropole).</span><span>park</span></a>
+      <a href="stake.html#lab"><span><strong>A room and a lab you can use.</strong> A free community room at Bâtiment 78, open before construction starts, and a school energy lab with the public meters live on the wall.</span><span>lab</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="noise">
+  <div class="wrap concern">
+    <div>
+      <h2>Noise and the view</h2>
+      <p class="fear" style="margin-top:18px">Will I hear fans all night, and will I see a grey box from my window?</p>
+    </div>
+    <div>
+      <div class="big">40<span class="u">dB(A)</span></div>
+      <p class="bigk">At night the campus may add at most 3 dB(A) to the background measured at the nearest home's façade before construction, and its own sound never exceeds 40 dB(A), whichever is stricter (derived target; acoustician confirms before the permit). 40 dB(A) is the WHO outdoor night guideline, used here as a ceiling for the campus alone; 3 dB(A) is a change most people would not notice outdoors, and stricter than the legal night emergence of 4 dB(A).</p>
+      <dl class="how">
+        <dt>How</dt><dd>The station sits in the corner of its lot furthest from homes on both sides: 520 m from the nearest house to the south, 640 m from the nearest to the north. The nearest façade, at le Bois Noir, is 400 m from the nearest building, so the campus is designed to 40 dB(A) there: about 8 dB(A) quieter than a comparable campus, Olds, after its noise controls (derived). An enclosed engine hall; oversized, low-speed dry coolers; acoustic barriers; generator tests only in daytime, on a published calendar.</dd>
+        <dt>The view</dt><dd>Buildings no taller than 20 m, well under the airport's 45 m ceiling. The nearest house to a building is 400 m away. The northern lot, the one facing the nearest houses, holds no building and becomes a public park. The view from the D177 verge by rue du Manoir is drawn before anything is built.</dd>
+        <dt>Checked</dt><dd>An independent meter on a façade at le Bois Noir, the nearest home to a campus building, publishes the total level, live. The night background is measured at the façade before construction; after opening the acoustician measures the campus's contribution with everything running (residual-level method, NF S31-010) and publishes it every three months. Annual anonymised sales within 1 km are published.</dd>
+      </dl>
+      <p class="more">Objection register, rows <a href="register.html#o1">1</a>, <a href="register.html#o12">12</a> and <a href="register.html#o13">13</a>. 40 dB(A) is the WHO night guideline; the 3 decibel limit comes from the 1997 ministerial order on industrial noise (3 to 4 dB(A) depending on the existing background). An acoustician confirms both before the permit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="water">
+  <div class="wrap concern">
+    <div>
+      <h2>Water</h2>
+      <p class="fear" style="margin-top:18px">We have had drought orders three summers out of five. Will it drink our water?</p>
+    </div>
+    <div>
+      <div class="big">10,000<span class="u">m³ a year, at most</span></div>
+      <p class="bigk">None of it for cooling. The servers are cooled by a closed liquid loop and dry coolers; the station uses air-cooled condensers. A conventional evaporative design would use about 1.9 million m³ a year (derived).</p>
+      <dl class="how">
+        <dt>How</dt><dd>No cooling towers, no evaporation. Rainwater from the roofs covers most of what remains (washrooms, cleaning). The campus is not a drinking-water customer in a drought.</dd>
+        <dt>Checked</dt><dd>The intake meter, published. Drought orders, like those of 2022, 2023 and June 2026, do not touch a dry-cooled campus.</dd>
+      </dl>
+      <p class="more">Objection register, row <a href="register.html#o2">2</a>. Derived from comparable French sites (850 m³ a year at 60 MW at Wissous; 250 m³ a year at Marseille), which scale to 1,000 to 1,500 m³ here; 10,000 m³ is the ceiling, leaving room for washrooms, cleaning and the construction phase.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band surface" id="power">
+  <div class="wrap concern">
+    <div>
+      <h2>Power</h2>
+      <p class="fear" style="margin-top:18px">Brittany already imports most of its electricity. Will my bill go up to feed it?</p>
+    </div>
+    <div>
+      <div class="big">0<span class="u">MW imported</span></div>
+      <p class="bigk">The campus makes every megawatt it uses: a 180 to 200 MW heat-and-power station with a spare unit, and a 100 MW battery for faults. It is connected to the grid only to sell: up to 80 MW of surplus when every unit runs, into a region that produced 31% of its own electricity in 2024. The operating company commits to zero import; RTE's meter verifies it monthly, and any import is published with its cause.</p>
+      <dl class="how">
+        <dt>The cost</dt><dd>On natural gas the station emits about 530,000 tonnes of CO₂ a year running the campus alone, and up to 890,000 tonnes when it exports at full output (derived). The number is published every year. Biomethane makes up 20% of the fuel at opening and 50% by 2035, bought under contract with guarantees of origin on the national market, not only from Brittany, and the share is published every year: about 40% less carbon (derived; target, to be costed). At 50% the campus alone would use more biomethane than all of Brittany produced in 2025, 1,092 GWh (derived, NaTran). No field of diesel generators: one small emergency generator to restart the station, its tank underground, tested in daytime.</dd>
+        <dt>Checked</dt><dd>The grid operator's meter at the 90 kV substation, published monthly, shows zero import. An annual emissions report is built from audited fuel invoices.</dd>
+      </dl>
+      <p class="more">Objection register, rows <a href="register.html#o3">3</a>, <a href="register.html#o4">4</a> and <a href="register.html#o9">9</a>. Electricity figures: Insee Conjoncture Bretagne n° 54, Bilan économique 2024 (June 2025). Full arithmetic on the <a href="energy.html">energy page</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="heat">
+  <div class="wrap concern">
+    <div>
+      <h2>Heat and your bill</h2>
+      <p class="fear" style="margin-top:18px">Fine, but what do we actually get?</p>
+    </div>
+    <div>
+      <div class="big heat">50<span class="u">% below gas on the nearest streets</span></div>
+      <p class="bigk">Heat from the servers and the station goes into the existing heat loop on the industrial site and then to homes. For a gas-heated house that is about €750 a year less on the nearest streets, about €450 for the first homes connected, and about €150 for everyone else, at least 10% below the gas bill and guaranteed in the concession (derived).</p>
+      <dl class="how">
+        <dt>How</dt><dd>50 GWh a year at opening: about 20 GWh for the industrial site and about 30 GWh for a first residential extension to the nearest streets, about 2,000 homes (derived). The existing loop serves only the industrial site today, so the homes are new pipe. Up to 300 GWh a year by years 3 to 5, about 20,000 gas-heated homes' worth (derived): every home offered a connection, the three communes first, then neighboring communes as the Rennes Métropole concession sets. The charter-zone price is the lower of €54 per MWh or half the gas price, for 15 years.</dd>
+        <dt>Also</dt><dd>Local taxes of about €8 to 10 million a year, mostly to the metropolitan authority (derived; a tax adviser confirms). The bill is published annually.</dd>
+        <dt>Checked</dt><dd>The price is written into the network contract. A bill comparison is published every year, and the meter where the heat enters the network shows what was delivered.</dd>
+      </dl>
+      <p class="more">Objection register, row <a href="register.html#o7">7</a>. Prices: AMORCE 2024 network survey (€104.7/MWh) and Effy 2025 gas bill (€1,512 for 14,000 kWh). Tiers and arithmetic on the <a href="energy.html#tariff">energy page</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band surface" id="jobs">
+  <div class="wrap concern">
+    <div>
+      <h2>Jobs and skills</h2>
+      <p class="fear" style="margin-top:18px">This area has lost thousands of jobs. A data centre employs forty people.</p>
+    </div>
+    <div>
+      <div class="big">~320<span class="u">jobs supported, ~80 direct</span></div>
+      <p class="bigk">Both numbers, because the split matters: about 80 people on the campus payroll, about 320 in total once the contractors, the heat network and the station are counted (derived: a comparable French filing's 1:4 ratio applied to the 80). Our target is half the hires from the area, reached through France Travail, the academy and insertion hours in the building contracts; we publish the share every year, and nobody is turned down for where they live. 800 to 1,500 people on site at the peak of construction.</p>
+      <dl class="how">
+        <dt>How</dt><dd>A technician academy in the incubator building on the industrial site, open before the campus is, with first places for people already working on the site next door and bursaries paid by the local benefit fund. The target is half of the campus hires from the area, published every year.</dd>
+        <dt>Checked</dt><dd>An employment report every year, by postcode, with what is counted stated.</dd>
+      </dl>
+      <p class="more">Objection register, rows <a href="register.html#o5">5</a> and <a href="register.html#o16">16</a>. Ratio derived from Digital Realty's Marseille CNDP filing; construction range from Cortex Construct.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="construction">
+  <div class="wrap concern">
+    <div>
+      <h2>Construction and the school</h2>
+      <p class="fear" style="margin-top:18px">Two years of lorries past the school gate.</p>
+    </div>
+    <div>
+      <div class="big">0<span class="u">lorries through Saint-Jacques or on the D177; 230 homes along the D34 covered by the charter</span></div>
+      <p class="bigk">Construction traffic comes from the south: off the N137, along the D34 and through the industrial zone, straight into the lots. Never on the D177, never through the streets to the north (the route on the D34 is subject to the Département, which owns it). The D34 is a departmental road along the northern edge of Chartres-de-Bretagne: the nearest home is 45 m from it and about 230 homes are within 300 m (derived from IGN building data). Those households are covered by the charter's construction clauses. The route stays 1.6 km from École Eugène Pottier.</p>
+      <dl class="how">
+        <dt>How</dt><dd>7:00 to 19:00 on weekdays, for 24 to 36 months. An air-quality monitor at École Eugène Pottier, another at the Brocéliande nursery school, the nearest school to the D34 approach, and an air and noise monitor on the D34 itself, all published live for the whole build and after. A soil survey of the lots is published before any transfer; one closed service station sits 75 m from the project's coordinates, and cleaning it up is part of the project. Afterwards, about 300 vehicle trips a day (derived from the building floor area), all from the south.</dd>
+        <dt>Checked</dt><dd>The route and hours are written into the permit and the charter. The monitor's data is public. A named contact answers within 48 hours.</dd>
+      </dl>
+      <p class="more">Objection register, rows <a href="register.html#o8">8</a> and <a href="register.html#o10">10</a>. Traffic estimate from the US trip-rate handbook (ITE) via the Willow Lakes traffic report; soil records from Géorisques. Test the route against your own address at the <a href="#af">top of the page</a>.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="band tight" id="contact">
+  <div class="wrap">
+    <h2>Sources and contact</h2>
+    <div class="contact" style="margin-top:24px">
+      <div><h3>A named contact</h3><p>Name, phone number and office hours are published on day 1 of week 1, on this page and on paper in each commune's building. <strong>48 hours</strong> to an answer, in writing.</p></div>
+      <div><h3>The register</h3><p>Every objection raised so far, with its answer, its number and its source, in the <a href="register.html"><strong>objection register</strong></a>. Residents add rows from week 1.</p></div>
+      <div><h3>Every number's source</h3><p>Figures on this page come from the IGN cadastre and terrain model, Géorisques, INSEE, the Préfecture's drought orders, AMORCE, Effy and comparable French permit files. The list is on the <a href="sources.html"><strong>sources page</strong></a>; anything derived is labelled.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>A response to Build's Product – Neofirm technical challenge by Christian Shields · <a href="sources.html">Sources</a> · <a href="register.html">Objection register</a></p>
+  </div>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="assets/address-tool.js"></script>
+</body>
+</html>

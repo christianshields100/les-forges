@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ce que voient les habitants · Les Forges de la Janais</title>
+<meta name="description" content="Ce qui change à mon adresse : saisissez une adresse dans les trois communes et voyez la distance, la visibilité, le bruit nocturne, l'itinéraire de chantier et ce que le réseau de chaleur vous fait économiser. Puis un écran par inquiétude.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Les Forges de la Janais <small>La Janais, Rennes</small></a>
+    <nav class="menu" aria-label="Sections">
+      <a href="process.html">Process</a>
+      <a href="community.html" aria-current="page">What the community sees</a>
+      <a href="becomes.html">What it becomes</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compact">
+  <div class="wrap">
+    <nav class="lang" aria-label="Langue"><a href="community.html" aria-current="page" lang="fr">Français</a><a href="community-en.html" lang="en" hreflang="en">English</a></nav>
+    <p class="place"><span class="dot" aria-hidden="true"></span> Ce que voient les habitants · ce qu'un habitant aurait en main</p>
+    <h1>Ce qui change à mon adresse</h1>
+    <p class="lede">Il apporte sa propre électricité, chauffe vos logements moins cher que le gaz, verse au moins 1&nbsp;M€ par an dans un fonds géré par les habitants et leurs communes, et rend la parcelle face à vos maisons en parc. Saisissez une adresse à Chartres-de-Bretagne, Saint-Jacques-de-la-Lande ou Noyal-Châtillon-sur-Seiche et voyez ce que cela signifie pour votre logement, en chiffres que vous pouvez vérifier.</p>
+    <div class="tool">
+      <div class="f">
+        <form id="af" role="search">
+          <label class="sr" for="addr">Votre adresse</label>
+          <input type="search" id="addr" name="a" placeholder="12 rue du Manoir, Saint-Jacques-de-la-Lande" autocomplete="street-address" autocapitalize="words" spellcheck="false" required>
+          <button class="btn primary" type="submit">Voir</button>
+        </form>
+        <div class="examples"><span>Essayez</span><button type="button" data-q="rue du Manoir, Saint-Jacques-de-la-Lande">rue du Manoir</button><button type="button" data-q="le Bois Noir, Chartres-de-Bretagne">le Bois Noir</button><button type="button" data-q="avenue de la Marionnais, Chartres-de-Bretagne">avenue de la Marionnais, Chartres</button></div>
+        <p class="status" id="status" aria-live="polite"></p>
+      </div>
+      <div class="m">
+        <div id="map" class="map" role="region" aria-label="Carte du campus, de l'itinéraire de chantier et de votre adresse"></div>
+        <p class="small muted" style="margin-top:8px">Photo aérienne&nbsp;: IGN. Parcelles du cadastre&nbsp;; bâtiments et centrale aux emplacements du plan masse&nbsp;; itinéraire de chantier sur le réseau routier IGN. Rien de ce que vous saisissez n'est conservé.</p>
+      </div>
+      <div class="results" id="results" hidden aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band surface tight">
+  <div class="wrap">
+    <div class="strip" role="list" aria-label="Les huit engagements">
+      <div role="listitem" class="lead"><div class="v num">0<span class="u">MW</span></div><div class="k">importé du réseau breton</div></div>
+      <div role="listitem" class="lead"><div class="v num">~20&nbsp;000</div><div class="k">foyers au gaz équivalents chauffés (dérivé)&nbsp;: les trois communes d'abord, puis les voisines, jamais plus cher que le gaz</div></div>
+      <div role="listitem"><div class="v num">10&nbsp;000<span class="u">m³</span></div><div class="k">d'eau par an au plus, aucune pour le refroidissement</div></div>
+      <div role="listitem" class="lead"><div class="v num">40<span class="u">dB(A)</span></div><div class="k">au plus pour le campus seul chez le voisin le plus proche la nuit, la valeur guide nocturne de l'OMS en extérieur&nbsp;; et pas plus de 3 dB(A) au-dessus du fond mesuré avant le chantier</div></div>
+      <div role="listitem"><div class="v num">~320</div><div class="k">emplois au total (dérivé), ~80 salariés, académie sur place</div></div>
+      <div role="listitem"><div class="v num">16<span class="u">ha</span></div><div class="k">en trois parcelles vides&nbsp;; tout le bâti sur 5,5 ha, 3,7 ha de parc public</div></div>
+      <div role="listitem" class="lead"><div class="v num">1&nbsp;M€<span class="u">+ par an</span></div><div class="k">dans un fonds local géré par les habitants et leurs communes, pendant toute la vie du campus, plus 5&nbsp;M€ à la clôture financière</div></div>
+      <div role="listitem"><div class="v num">~530<span class="u">kt CO₂</span></div><div class="k">par an au gaz pour le campus, jusqu'à 890 kt en exportant (dérivé), publiés chaque année&nbsp;; biométhane 50&nbsp;% du combustible en 2035, acheté avec garanties d'origine</div></div>
+    </div>
+    <p class="small muted" style="margin-top:14px">Un écran par inquiétude ci-dessous&nbsp;: le bruit et la vue, l'eau, l'électricité, la chaleur et votre facture, les emplois et les compétences, le chantier et l'école. Les chiffres marqués «&nbsp;dérivé&nbsp;» le restent jusqu'à confirmation par un spécialiste.</p>
+  </div>
+</section>
+
+<section class="band" id="commitments">
+  <div class="wrap">
+    <h2>Les huit engagements</h2>
+    <p class="intro">Chacun est un chiffre, chacun a son compteur. Ce sont les mêmes huit sur chaque page de ce site. Où venir et quand, semaine par semaine&nbsp;: sur la <a href="process.html">page du processus</a> (en anglais).</p>
+    <div class="tablewrap" style="margin-top:24px">
+      <table class="commit" aria-label="Les huit engagements">
+        <thead><tr><th>Engagement</th><th>Chiffre</th><th>Contrôle</th><th>Dépend de</th></tr></thead>
+        <tbody>
+          <tr><td>Électricité</td><td>0 MW importé&nbsp;; 0 à 80 MW exportés selon la disponibilité de la centrale</td><td data-l="Contrôle">Le compteur du gestionnaire de réseau, chaque mois. Dépend de: RTE (le raccordement 90 kV)&nbsp;; GRTgaz</td><td data-l="Dépend de">—</td></tr>
+          <tr><td>Chaleur</td><td>Chaque logement à qui un raccordement est proposé, jusqu'à 300 GWh par an en phase 2, l'équivalent d'environ 20&nbsp;000 foyers chauffés au gaz (dérivé)&nbsp;; les rues les plus proches au plus bas de 54&nbsp;€/MWh ou de 50&nbsp;% du prix du gaz pendant 15 ans&nbsp;; phase 1 à 30&nbsp;% sous la facture de gaz&nbsp;; tous les autres au moins 10&nbsp;% sous&nbsp;; sous réserve de la concession de Rennes Métropole</td><td data-l="Contrôle">Tarif du réseau publié&nbsp;; raccordements comptés&nbsp;; comparaison de factures chaque année</td><td data-l="Dépend de">La concession de Rennes Métropole&nbsp;; ENGIE et l'usine&nbsp;; l'approvisionnement en biométhane</td></tr>
+          <tr><td>Eau</td><td>Moins de 10&nbsp;000 m³ par an, aucune pour le refroidissement</td><td data-l="Contrôle">Compteur d'arrivée, publié. Dépend de: Rien hors du campus</td><td data-l="Dépend de">—</td></tr>
+          <tr><td>Calme</td><td>La nuit, le campus peut ajouter au plus 3 dB(A) au bruit de fond mesuré à votre façade avant le chantier, et son propre bruit ne dépasse jamais 40 dB(A), la plus stricte des deux règles s'appliquant (cible dérivée&nbsp;; l'acousticien la confirme avant le permis).</td><td data-l="Contrôle">Le bruit de fond nocturne est mesuré en façade avant le chantier&nbsp;; après l'ouverture, l'acousticien mesure la contribution du campus toutes installations en marche (méthode du niveau résiduel, NF S31-010) et la publie tous les trois mois.. Dépend de: Le propriétaire de la façade qui porte le sonomètre&nbsp;; l'acousticien</td><td data-l="Dépend de">—</td></tr>
+          <tr><td>Emplois</td><td>Environ 80 salariés, environ 320 au total (dérivé)&nbsp;; objectif de la moitié des recrutements dans le territoire, publié chaque année&nbsp;; l'académie</td><td data-l="Contrôle">Effectifs annuels par code postal. Dépend de: Rennes Métropole (Bâtiment 78)</td><td data-l="Dépend de">—</td></tr>
+          <tr><td>Carbone</td><td>Environ 530&nbsp;000 t de CO₂ par an au gaz pour le seul campus, jusqu'à 890&nbsp;000 en pleine exportation (dérivé)&nbsp;; biométhane 20&nbsp;% du combustible à l'ouverture, 50&nbsp;% en 2035, acheté sous contrat avec garanties d'origine sur le marché national, part publiée chaque année</td><td data-l="Contrôle">Rapport annuel à partir des factures de combustible auditées. Dépend de: Le contrat de fourniture de biométhane</td><td data-l="Dépend de">—</td></tr>
+          <tr><td>Foncier</td><td>16 ha en trois parcelles vides&nbsp;: tout le bâti sur AC 0705 (5,5 ha)&nbsp;; AC 0710 (6,1 ha) sans bâtiment&nbsp;; 3,7 ha d'AC 0541 en parc public&nbsp;; l'usine intacte&nbsp;; habitations les plus proches à 200 m de la parcelle du parc et à 400 m du premier bâtiment, la centrale à 520 m de la maison la plus proche (mesuré)</td><td data-l="Contrôle">Plan masse dans le permis&nbsp;; la date d'ouverture du parc y est inscrite. Dépend de: Rennes Métropole et l'aménageur de la ZAC La Janais (vente d'AC 0705)&nbsp;; le propriétaire de l'usine (libération d'AC 0541 et d'AC 0710, accès au parc)</td><td data-l="Dépend de">—</td></tr>
+          <tr><td>Part</td><td>Au moins 1&nbsp;M€ par an dans un fonds local pendant toute la vie du campus, plus 5&nbsp;M€ à la clôture financière&nbsp;; les habitants et les communes possèdent la coopérative de chaleur&nbsp;; un parc public de 3,7 ha et un labo de l'énergie au Bâtiment 78</td><td data-l="Contrôle">Les comptes du fonds et le registre des membres de la coopérative, publiés chaque année&nbsp;; la date d'ouverture du parc inscrite dans le permis</td><td data-l="Dépend de">La rédaction juridique (fonds, clause)&nbsp;; Rennes Métropole (concession, Bâtiment 78)&nbsp;; le propriétaire de l'usine (accès au parc)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="charter wide" id="charter">
+      <h3>La charte des voisins</h3>
+      <p class="muted">Pour chaque foyer des rues les plus proches, à environ 1 km des parcelles, et, pour ses clauses chantier, chaque foyer à moins de 300 m de l'accès par la D34. Signée par la société d'exploitation et le foyer&nbsp;; contresignée par la commune.</p>
+      <ol>
+        <li>La nuit, le campus peut ajouter au plus 3 dB(A) au bruit de fond mesuré à votre façade avant le chantier, et son propre bruit ne dépasse jamais 40 dB(A), la plus stricte des deux règles s'appliquant (cible dérivée&nbsp;; l'acousticien la confirme avant le permis). Le bruit de fond nocturne est mesuré en façade avant le chantier&nbsp;; après l'ouverture, l'acousticien mesure la contribution du campus toutes installations en marche (méthode du niveau résiduel, NF S31-010) et la publie tous les trois mois.</li>
+        <li>Vous êtes prioritaire pour le raccordement au réseau de chaleur, au plus bas de 54&nbsp;€/MWh ou de 50&nbsp;% du prix du gaz, pendant 15 ans (dérivé&nbsp;; confirmé avant le dépôt de la demande de permis&nbsp;; sous réserve de la concession de Rennes Métropole).</li>
+        <li>Aucun camion de chantier n'emprunte les rues de Saint-Jacques-de-la-Lande ni la D177&nbsp;; le trafic arrive par le sud, par la D34, de 7 h à 19 h en semaine.</li>
+        <li>Si votre logement est à moins de 300 m de l'accès par la D34, les camions passeront devant chez vous. Pour ces foyers, la charte ajoute une limitation de vitesse, un lave-roues à la sortie du site, une mesure des poussières et du bruit sur la D34 publiée en direct, et le même interlocuteur sous 48 heures.</li>
+        <li>Une personne nommée vous répond sous 48 heures, par téléphone ou au bureau sur le site industriel.</li>
+        <li>Vous disposez d'un siège au comité de suivi. Ce que le comité peut arrêter est convenu avec vous en semaine 3, avant la signature.</li>
+        <li>Votre vue est dessinée avant le début des travaux, et la lisière plantée face à votre rue est entretenue pendant toute la vie du campus.</li>
+        <li>Les ventes anonymisées dans un rayon de 1 km sont publiées chaque année. Si vous mettez votre logement en vente, une expertise indépendante est payée par le campus.</li>
+        <li>Votre foyer reçoit une part fondatrice de la coopérative de chaleur, payée par la société du campus, et une voix pour élire les habitants siégeant au conseil du fonds.</li>
+      </ol>
+      <p class="sign">Texte provisoire, mis sur la table à l'atelier de la semaine 2. Les modifications des habitants vont dans le journal des changements. Le prix de 54&nbsp;€ et le plafond de 40 dB(A) sont dérivés&nbsp;; tous deux sont confirmés avant le dépôt de la demande de permis, et un foyer qui a signé peut se retirer si l'un d'eux change. Dépend de&nbsp;: la commune (contreseing)&nbsp;; la concession de Rennes Métropole (le prix de la chaleur)&nbsp;; le propriétaire de la façade qui porte le sonomètre&nbsp;; la rédaction juridique (l'achat de part par le fonds).</p>
+  </div>
+</section>
+
+<section class="band surface" id="owns">
+  <div class="wrap split">
+    <div>
+      <h2>Ce que vous possédez et ce que vous pouvez utiliser</h2>
+      <p class="intro">Quatre choses qui sont à vous, pas au campus. Les modalités sont sur <a href="stake-fr.html">Ce que la commune possède</a>.</p>
+    </div>
+    <div class="four">
+      <a href="stake-fr.html#fund"><span><strong>Un fonds que vous gérez.</strong> Au moins 1&nbsp;M€ par an pendant toute la vie du campus, 5&nbsp;M€ à la clôture financière, 250&nbsp;k€ par an pendant le chantier. Huit sièges au conseil, dont six pour les habitants et les communes. Comptes audités chaque année.</span><span>fonds</span></a>
+      <a href="stake-fr.html#coop"><span><strong>Une coopérative de chaleur qui vous appartient.</strong> 50&nbsp;€ la part, un membre une voix, 25 à 49&nbsp;% de la société qui exploite le réseau, un vote sur le prix chaque année. Si vous habitez la zone charte, la société du campus paie votre première part.</span><span>coopérative</span></a>
+      <a href="stake-fr.html#park"><span><strong>Un parc où vous promener.</strong> 3,7 ha de la parcelle face aux maisons les plus proches, plantés, ouverts tous les jours, avec un jardin d'hiver chauffé par le campus. Ouvert avant la mise en service du premier bâtiment (sous réserve de la libération de la parcelle par le propriétaire de l'usine et de Rennes Métropole).</span><span>parc</span></a>
+      <a href="stake-fr.html#lab"><span><strong>Une salle et un labo à votre usage.</strong> Une salle associative gratuite au Bâtiment 78, ouverte avant le chantier, et un labo de l'énergie pour les écoles avec les compteurs publics en direct sur le mur.</span><span>labo</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="noise">
+  <div class="wrap concern">
+    <div>
+      <h2>Le bruit et la vue</h2>
+      <p class="fear" style="margin-top:18px">Est-ce qu'on va entendre les ventilateurs toute la nuit et voir une boîte grise depuis la fenêtre&nbsp;?</p>
+    </div>
+    <div>
+      <div class="big">40<span class="u">dB(A)</span></div>
+      <p class="bigk">La nuit, le campus peut ajouter au plus 3 dB(A) au bruit de fond mesuré à la façade du voisin le plus proche avant le chantier, et son propre bruit ne dépasse jamais 40 dB(A), la plus stricte des deux règles s'appliquant (cible dérivée&nbsp;; l'acousticien la confirme avant le permis). 40 dB(A) est la valeur guide nocturne de l'OMS en extérieur, prise ici comme plafond pour le campus seul&nbsp;; 3 dB(A) est un écart que la plupart des gens ne remarquent pas dehors, plus strict que l'émergence légale de nuit de 4 dB(A).</p>
+      <dl class="how">
+        <dt>Comment</dt><dd>La centrale occupe l'angle de sa parcelle le plus éloigné des habitations des deux côtés&nbsp;: à 520 m de la maison la plus proche au sud, à 640 m de la plus proche au nord. La façade la plus proche, au Bois Noir, est à 400 m du premier bâtiment&nbsp;; le campus est donc conçu pour 40 dB(A) à cette façade&nbsp;: environ 8 dB(A) de moins qu'un campus comparable, Olds, après ses mesures antibruit (dérivé). Une salle des moteurs fermée&nbsp;; des aéroréfrigérants surdimensionnés tournant à basse vitesse&nbsp;; des écrans acoustiques&nbsp;; les essais de groupes uniquement de jour, selon un calendrier publié.</dd>
+        <dt>La vue</dt><dd>Des bâtiments de 20 m au plus, bien sous le plafond de 45 m de l'aéroport. La maison la plus proche d'un bâtiment est à 400 m. La parcelle nord, celle qui fait face aux maisons les plus proches, ne porte aucun bâtiment et devient un parc public. La vue depuis le bord de la D177, près de la rue du Manoir, est dessinée avant toute construction.</dd>
+        <dt>Vérifié</dt><dd>Un sonomètre indépendant sur une façade du Bois Noir, la maison la plus proche d'un bâtiment du campus, publie le niveau total en direct. Le bruit de fond nocturne est mesuré en façade avant le chantier&nbsp;; après l'ouverture, l'acousticien mesure la contribution du campus toutes installations en marche (méthode du niveau résiduel, NF S31-010) et la publie tous les trois mois. Les ventes anonymisées dans un rayon de 1 km sont publiées chaque année.</dd>
+      </dl>
+      <p class="more">Lignes <a href="register-fr.html#o1">1</a>, <a href="register-fr.html#o12">12</a> et <a href="register-fr.html#o13">13</a> du registre. 40 dB(A) est la valeur guide nocturne de l'OMS&nbsp;; la limite de 3 décibels vient de l'arrêté du 23 janvier 1997 (3 ou 4 dB(A) selon le fond existant). Un acousticien confirme les deux avant le permis.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="water">
+  <div class="wrap concern">
+    <div>
+      <h2>L'eau</h2>
+      <p class="fear" style="margin-top:18px">Nous avons eu des arrêtés sécheresse trois étés sur cinq. Est-ce qu'il va pomper notre eau&nbsp;?</p>
+    </div>
+    <div>
+      <div class="big">10&nbsp;000<span class="u">m³ par an, au plus</span></div>
+      <p class="bigk">Rien pour le refroidissement. Les serveurs sont refroidis par une boucle liquide fermée et des aéroréfrigérants&nbsp;; la centrale utilise des condenseurs à air. Une conception classique par évaporation consommerait environ 1,9 million de m³ par an (dérivé).</p>
+      <dl class="how">
+        <dt>Comment</dt><dd>Pas de tours de refroidissement, pas d'évaporation. L'eau de pluie des toitures couvre l'essentiel du reste (sanitaires, nettoyage). En période de sécheresse, le campus n'est pas un client de l'eau potable.</dd>
+        <dt>Vérifié</dt><dd>Le compteur d'arrivée, publié. Les arrêtés sécheresse, comme ceux de 2022, 2023 et juin 2026, ne touchent pas un campus refroidi à sec.</dd>
+      </dl>
+      <p class="more">Ligne <a href="register-fr.html#o2">2</a> du registre. Dérivé de sites français comparables (850 m³ par an pour 60 MW à Wissous&nbsp;; 250 m³ par an à Marseille), soit 1&nbsp;000 à 1&nbsp;500 m³ ici&nbsp;; 10&nbsp;000 m³ est le plafond, avec de la marge pour les sanitaires, le nettoyage et le chantier.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band surface" id="power">
+  <div class="wrap concern">
+    <div>
+      <h2>L'électricité</h2>
+      <p class="fear" style="margin-top:18px">La Bretagne importe déjà l'essentiel de son électricité. Ma facture va-t-elle augmenter pour l'alimenter&nbsp;?</p>
+    </div>
+    <div>
+      <div class="big">0<span class="u">MW importé</span></div>
+      <p class="bigk">Le campus produit chaque mégawatt qu'il consomme&nbsp;: une centrale de cogénération de 180 à 200 MW avec une unité de réserve, et une batterie de 100 MW pour les incidents. Il n'est raccordé au réseau que pour vendre&nbsp;: jusqu'à 80 MW d'excédent quand toutes les unités tournent, dans une région qui a produit 31&nbsp;% de son électricité en 2024. La société d'exploitation s'engage à un import nul&nbsp;; le compteur de RTE le vérifie chaque mois, et tout import est publié avec sa cause.</p>
+      <dl class="how">
+        <dt>Le coût</dt><dd>Au gaz naturel, la centrale émet environ 530&nbsp;000 tonnes de CO₂ par an pour le seul campus, et jusqu'à 890&nbsp;000 tonnes quand elle exporte à pleine puissance (dérivé). Le chiffre est publié chaque année. Le biométhane représente 20&nbsp;% du combustible à l'ouverture et 50&nbsp;% en 2035, acheté sous contrat avec garanties d'origine sur le marché national, pas seulement en Bretagne, et la part est publiée chaque année&nbsp;: environ 40&nbsp;% de carbone en moins (dérivé&nbsp;; objectif à chiffrer). À 50&nbsp;%, le seul campus utiliserait plus de biométhane que toute la Bretagne n'en a produit en 2025, 1&nbsp;092 GWh (dérivé, NaTran). Pas de parc de groupes diesel&nbsp;: un seul petit groupe de démarrage, cuve enterrée, essais de jour.</dd>
+        <dt>Vérifié</dt><dd>Le compteur du gestionnaire de réseau au poste 90 kV, publié chaque mois, montre zéro import. Un rapport d'émissions annuel est établi à partir des factures de combustible auditées.</dd>
+      </dl>
+      <p class="more">Lignes <a href="register-fr.html#o3">3</a>, <a href="register-fr.html#o4">4</a> et <a href="register-fr.html#o9">9</a> du registre. Chiffres électriques&nbsp;: Insee Conjoncture Bretagne n° 54, Bilan économique 2024 (juin 2025). Le détail du calcul sur la <a href="energy.html">page énergie</a> (en anglais).</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="heat">
+  <div class="wrap concern">
+    <div>
+      <h2>La chaleur et votre facture</h2>
+      <p class="fear" style="margin-top:18px">D'accord, mais qu'est-ce qu'on y gagne, concrètement&nbsp;?</p>
+    </div>
+    <div>
+      <div class="big heat">50<span class="u">% sous le gaz dans les rues les plus proches</span></div>
+      <p class="bigk">La chaleur des serveurs et de la centrale alimente la boucle de chaleur existante du site industriel, puis les logements. Pour une maison chauffée au gaz, c'est environ 750&nbsp;€ de moins par an dans les rues les plus proches, environ 450&nbsp;€ pour les premiers foyers raccordés, et environ 150&nbsp;€ pour tous les autres, au moins 10&nbsp;% sous la facture de gaz, garanti dans la concession (dérivé).</p>
+      <dl class="how">
+        <dt>Comment</dt><dd>50 GWh par an à l'ouverture&nbsp;: environ 20 GWh pour le site industriel et environ 30 GWh pour une première extension résidentielle vers les rues les plus proches, environ 2&nbsp;000 foyers (dérivé). La boucle existante ne dessert que le site industriel aujourd'hui&nbsp;; les logements sont de nouvelles canalisations. Jusqu'à 300 GWh par an de la troisième à la cinquième année, l'équivalent d'environ 20&nbsp;000 foyers chauffés au gaz (dérivé)&nbsp;: chaque logement à qui un raccordement est proposé, les trois communes d'abord, puis les communes voisines selon la concession de Rennes Métropole. Le prix de la zone charte est le plus bas de 54&nbsp;€/MWh ou de la moitié du prix du gaz, pendant 15 ans.</dd>
+        <dt>Aussi</dt><dd>Des taxes locales d'environ 8 à 10 millions d'euros par an, pour l'essentiel à la métropole (dérivé&nbsp;; un fiscaliste confirme). Le montant est publié chaque année.</dd>
+        <dt>Vérifié</dt><dd>Le tarif est inscrit dans la concession du réseau. Une comparaison de factures est publiée chaque année, et le compteur de chaleur en tête de réseau montre ce qui a été livré.</dd>
+      </dl>
+      <p class="more">Ligne <a href="register-fr.html#o7">7</a> du registre. Prix&nbsp;: enquête AMORCE 2024 (104,7&nbsp;€/MWh) et facture de gaz Effy 2025 (1&nbsp;512&nbsp;€ pour 14&nbsp;000 kWh). Paliers et calcul sur la <a href="energy.html#tariff">page énergie</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band surface" id="jobs">
+  <div class="wrap concern">
+    <div>
+      <h2>Les emplois et les compétences</h2>
+      <p class="fear" style="margin-top:18px">Ce territoire a perdu des milliers d'emplois. Un data center en emploie quarante.</p>
+    </div>
+    <div>
+      <div class="big">~320<span class="u">emplois soutenus, ~80 directs</span></div>
+      <p class="bigk">Les deux chiffres, parce que la répartition compte&nbsp;: environ 80 personnes salariées du campus, environ 320 au total en comptant les sous-traitants, le réseau de chaleur et la centrale (dérivé&nbsp;: le ratio 1 pour 4 d'un dossier français comparable appliqué aux 80). 800 à 1&nbsp;500 personnes sur le chantier au plus fort des travaux. Notre objectif est la moitié des recrutements dans le territoire, par France Travail, l'académie et des heures d'insertion dans les marchés de travaux&nbsp;; la part est publiée chaque année, et personne n'est écarté pour son lieu de résidence.</p>
+      <dl class="how">
+        <dt>Comment</dt><dd>Une académie de techniciens dans le bâtiment-incubateur du site industriel, ouverte avant le campus, avec des places en priorité pour les personnes qui travaillent déjà sur le site voisin et des bourses payées par le fonds local. L'objectif est la moitié des recrutements du campus dans le territoire, publié chaque année.</dd>
+        <dt>Vérifié</dt><dd>Un rapport sur l'emploi chaque année, par code postal, en précisant ce qui est compté.</dd>
+      </dl>
+      <p class="more">Lignes <a href="register-fr.html#o5">5</a> et <a href="register-fr.html#o16">16</a> du registre. Ratio dérivé du dossier CNDP de Digital Realty à Marseille&nbsp;; fourchette chantier d'après Cortex Construct.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="construction">
+  <div class="wrap concern">
+    <div>
+      <h2>Le chantier et l'école</h2>
+      <p class="fear" style="margin-top:18px">Deux ans de camions devant la grille de l'école.</p>
+    </div>
+    <div>
+      <div class="big">0<span class="u">camion dans Saint-Jacques ou sur la D177&nbsp;; 230 logements le long de la D34 couverts par la charte</span></div>
+      <p class="bigk">Le trafic de chantier arrive par le sud&nbsp;: sortie de la N137, D34, traversée de la zone industrielle, directement sur les parcelles. Jamais par la D177, jamais par les rues au nord (l'itinéraire sur la D34 est soumis au Département, qui en est propriétaire). La D34 est une route départementale qui longe le nord de Chartres-de-Bretagne&nbsp;: la maison la plus proche en est à 45 m et environ 230 logements sont à moins de 300 m (dérivé des données bâti de l'IGN). Ces foyers sont couverts par les clauses chantier de la charte. L'itinéraire reste à 1,6 km de l'école Eugène Pottier.</p>
+      <dl class="how">
+        <dt>Comment</dt><dd>De 7 h à 19 h en semaine, pendant 24 à 36 mois. Un capteur de qualité de l'air à l'école Eugène Pottier, un autre à l'école maternelle Brocéliande, l'école la plus proche de l'accès par la D34, et un capteur air et bruit sur la D34 elle-même, tous publiés en direct pendant tout le chantier et après. Un diagnostic des sols des parcelles est publié avant tout transfert&nbsp;; une ancienne station-service se trouve à 75 m du point donné dans le brief, et sa dépollution fait partie du projet. Ensuite, environ 300 trajets de véhicules par jour (dérivé de la surface des bâtiments), tous par le sud.</dd>
+        <dt>Vérifié</dt><dd>L'itinéraire et les horaires sont inscrits dans le permis et dans la charte. Les données du capteur sont publiques. Un interlocuteur nommé répond sous 48 heures.</dd>
+      </dl>
+      <p class="more">Lignes <a href="register-fr.html#o8">8</a> et <a href="register-fr.html#o10">10</a> du registre. Taux de trajets d'après le manuel ITE via le rapport de trafic Willow Lakes&nbsp;; sols d'après Géorisques. Testez l'itinéraire avec votre propre adresse <a href="#af">en haut de la page</a>.</p>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="band tight" id="contact">
+  <div class="wrap">
+    <h2>Sources et contact</h2>
+    <div class="contact" style="margin-top:24px">
+      <div><h3>Un interlocuteur nommé</h3><p>Nom, numéro de téléphone et horaires sont publiés le premier jour de la semaine 1, sur cette page et sur papier dans la salle de chaque commune. <strong>48 heures</strong> pour une réponse, par écrit.</p></div>
+      <div><h3>Le registre</h3><p>Chaque objection soulevée à ce jour, avec sa réponse, son chiffre et sa source, dans le <a href="register-fr.html"><strong>registre des objections</strong></a>. Les habitants ajoutent des lignes dès la semaine 1.</p></div>
+      <div><h3>La source de chaque chiffre</h3><p>Les chiffres de cette page viennent du cadastre et du modèle de terrain de l'IGN, de Géorisques, de l'INSEE, des arrêtés sécheresse de la préfecture, d'AMORCE, d'Effy et de dossiers de permis français comparables. La liste est sur la <a href="sources.html"><strong>page des sources</strong></a>&nbsp;; tout ce qui est dérivé est signalé.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Réponse au défi technique Product – Neofirm de Build, par Christian Shields · <a href="sources.html">Sources</a> · <a href="register-fr.html">Registre des objections</a></p>
+  </div>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="assets/address-tool.js"></script>
+</body>
+</html>

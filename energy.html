@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Energy and heat · Les Forges de la Janais</title>
+<meta name="description" content="The energy plan: a self-supplied heat-and-power station, a grid link used only to export, dry cooling, the heat network by phase, and the arithmetic behind the tariff.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html">Les Forges de la Janais <small>La Janais, Rennes</small></a>
+    <nav class="menu" aria-label="Sections">
+      <a href="process.html">Process</a>
+      <a href="community-en.html">What the community sees</a>
+      <a href="becomes.html">What it becomes</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compact">
+  <div class="wrap">
+    <p class="place"><span class="dot" aria-hidden="true"></span> Energy and heat · the arithmetic behind the numbers</p>
+    <h1>Every megawatt it uses, none from Brittany, and the heat sold for less than gas.</h1>
+    <p class="lede">"Bringing their own power" is read literally and held to 100%: the campus never imports. It is connected to the grid only to export. That removes the objection that decided Marseille and Le Bourget, and it puts a power station next to homes, which the rest of this page has to answer. Everything marked derived needs an engineer's confirmation before it is more than a design target.</p>
+  </div>
+</section>
+
+<section class="band surface">
+  <div class="wrap split">
+    <div>
+      <h2>Why keep a grid link at all</h2>
+      <p class="intro">A campus with no grid link at all was considered and rejected.</p>
+    </div>
+    <div class="stack measure">
+      <p>A 100 MW load with no grid connection loses all the regional benefit, in a region that produced 31% of its own electricity in 2024, and needs more redundancy for the same reliability. Export-only keeps the benefit and keeps the promise: RTE's meter at the 90 kV La Janais post shows zero import every month, and the surplus, up to 80 MW when every unit runs, is sold into Brittany.</p>
+      <p>The cost of that promise is a gas-fired station running around the clock, with its emissions published in full.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Why a gas plant, and why not Landivisiau again</h2>
+    <p class="intro">Three ways to keep the brief's promise were looked at. One holds up.</p>
+    <div class="tablewrap" style="margin-top:24px">
+      <table class="data">
+        <thead><tr><th>Option</th><th>Decision</th><th>Why</th><th>What it costs</th></tr></thead>
+        <tbody>
+          <tr><td>Gas combined heat and power on site, N+1, with a battery</td><td>Chosen</td><td>Keeps every megawatt on site, exports the surplus, and adds the engines' hot water to the servers' warm water, which lets the heat network run without large heat pumps.</td><td>about 530,000 t CO₂ a year running the campus alone, more when exporting; a power station 520 m from the nearest home, designed to 40 dB(A) at the nearest façade (derived); the fuel trajectory to deliver.</td></tr>
+          <tr><td>Renewable power bought offsite and delivered through the grid at 90 kV</td><td>Rejected</td><td>There is no 225 or 400 kV source within 3 km, so 100 MW of import would need years of grid reinforcement. Import contradicts "their own power". The servers' warm water would still be there, but without the engines' hotter water the network would need large heat pumps to reach its temperature.</td><td>Lower direct emissions on paper; a heat network that depends on large heat pumps; the region's scarcity argument comes straight back.</td></tr>
+          <tr><td>The same station with no grid connection at all</td><td>Rejected</td><td>Loses the regional benefit of the surplus and needs more redundancy for the same reliability (above).</td><td>More machines, no export, no better for the neighbors.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="intro" style="margin-top:24px">Landivisiau, the 446 MW gas plant in Finistère, was fought for a decade before it ran in 2022: it was imposed on a village by a regional pact, its heat was an afterthought, and its fuel was gas with no date for anything else. Three things differ here. The station sits on an empty lot in an activity zone, 520 m from the nearest home, in the corner of the lot furthest from homes on both sides. Part of its heat is sold, and that is the reason the network can reach the three communes. And the fuel is dated: 20% biomethane at opening, 50% by 2035, with the actual invoices audited and published each year.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>The power station</h2>
+    <p class="intro">Gas engines or turbines that make electricity and useful heat at the same time, with one spare unit so maintenance never cuts supply.</p>
+    <div class="tablewrap" style="margin-top:24px">
+      <table class="data">
+        <thead><tr><th>Item</th><th>Figure</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>IT load</td><td>100 MW</td><td>The brief.</td></tr>
+          <tr><td>Facility load</td><td>About 120 MW <span class="derived">(derived)</span></td><td>IT load plus cooling and losses, about 20% on top with dry cooling (a PUE of 1.2).</td></tr>
+          <tr><td>Station capacity</td><td>180 to 200 MW electrical, with one spare unit (N+1): for example three 60 MW units or four 50 MW units, sized with the engine supplier <span class="derived">(derived)</span></td><td>One unit can be down for maintenance with the campus fully served.</td></tr>
+          <tr><td>Battery</td><td>100 MW / 300 MWh</td><td>Rides through unit trips and engine starts: 100 MW for three hours, so about a sixth of the 120 MW facility load is shed during a full station outage; beyond three hours the campus shuts down in an orderly way.</td></tr>
+          <tr><td>Surplus exported</td><td>0 to 80 MW, depending on station availability</td><td>After campus load and battery charging, through the 90 kV substation. The upper end assumes every unit running; with one unit down for maintenance the surplus falls by that unit's output, to between zero and about 30 MW, and the zero-import commitment is unaffected. RTE to confirm the post's capacity (90 kV lines to Noyal and Belle-Épine).</td></tr>
+          <tr><td>Electricity generated</td><td>Campus only: 120 MW, about 1.05 TWh a year. Full export: 180 to 200 MW, 1.6 to 1.75 TWh <span class="derived">(derived)</span></td><td>Facility load times 8,760 hours; full export adds the surplus sold to Brittany and is an upper bound, with every unit running all year.</td></tr>
+          <tr><td>Electrical efficiency</td><td>About 45% <span class="derived">(assumption)</span></td><td>Gas engines or turbines in combined heat and power; the rest of the fuel energy leaves as recoverable heat and losses.</td></tr>
+          <tr><td>Gas burned</td><td>Campus only: about 2.3 to 2.4 TWh thermal a year. Full export: 3.5 to 3.9 TWh <span class="derived">(derived)</span></td><td>Electricity generated divided by 45%. GRTgaz supply at about 270 MWth running the campus and up to about 450 MWth when exporting, to confirm (derived: gas burned ÷ 8,760 hours); the industrial site already runs on gas.</td></tr>
+          <tr><td>Emission factor</td><td>0.227 t CO₂e per MWh thermal</td><td>ADEME Base Empreinte: natural gas, lower heating value, upstream included.</td></tr>
+          <tr><td>CO₂</td><td>Campus only: about 530,000 t a year. With full export: about 800,000 to 890,000 t <span class="derived">(derived)</span></td><td>Gas burned times the emission factor, on 100% natural gas. The biggest objection, said first, and published every year.</td></tr>
+          <tr><td>Against the French grid</td><td>About 25 times the grid average <span class="derived">(derived)</span></td><td>The same 1.05 TWh drawn from the French grid would emit about 20,000 t at RTE's 2025 average of 19.6 g CO₂e per kWh.</td></tr>
+          <tr><td>Carbon cost</td><td>About €43M a year on the campus-only case <span class="derived">(derived; assumption, to confirm)</span></td><td>A combustion plant of this size is covered by the EU Emissions Trading System. 530,000 t at an allowance price of about €82 per tonne (the press-reported level on 5 October 2026; the price page could not be opened, so the figure is an assumption to confirm).</td></tr>
+          <tr><td>Fuel trajectory</td><td>Biomethane 20% of the fuel at opening, 50% by 2035 <span class="derived">(target, to be costed)</span></td><td>At 44 g CO₂e per kWh for biomethane (ADEME 2020 life-cycle figure, via Nos Gestes Climat) the fuel's carbon falls by about 40% at 50% biomethane (derived). Supply contract and price to find. Bought under contract with guarantees of origin on the national market, not only from Brittany, which injected 1,092 GWh in 2025 (NaTran); at 50% the campus alone needs about 1.2 TWh (derived). The share is published every year.</td></tr>
+          <tr><td>Backup</td><td>The N+1 station and the battery</td><td>One small emergency generator on renewable diesel to restart the station, its tank underground, tested in daytime on a published calendar. No diesel farm (Wissous had 24 units for 60 MW).</td></tr>
+          <tr><td>Comparable</td><td>Landivisiau, 446 MW combined cycle, no heat use recorded in the cited profile</td><td>Siemens equipment, commercial operation April 2022, built under the Pacte électrique breton.</td></tr>
+        </tbody>
+      </table>
+      <p class="src">Permits: combustion at 50 MWth and above is ICPE rubrique 3110, autorisation environnementale; plus 4734 (fuel storage) and 4802 (refrigerants, threshold 300 kg). Low-NOx burners; stacks of about 25 m, to be confirmed by a dispersion study, which may push them towards the airport cap of 45 m above 38.1 m NGF. Sources: Insee Conjoncture Bretagne n° 54, Bilan économique 2024 (June 2025); Power Technology on Landivisiau; CyrusOne Wissous ICPE file.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band surface">
+  <div class="wrap split">
+    <div>
+      <h2>Cooling</h2>
+      <p class="intro">Dry and closed. Water is the top reason data centers get refused. This design uses almost none.</p>
+    </div>
+    <div class="stack measure">
+      <p>Liquid cooling to the racks, oversized dry coolers run at low fan speed for noise, and air-cooled condensers at the station. Total water under 10,000 m³ a year, none of it for cooling (derived from CyrusOne Wissous at 850 m³ a year for 60 MW and Telehouse Marseille at 250 m³). The comparables scale to 1,000 to 1,500 m³ for 100 MW; 10,000 m³ is the commitment ceiling, leaving room for washrooms, cleaning and construction-phase use. An evaporative design would use about 1.9 million m³ a year (derived: about 1.8 litres per kWh of facility load, 120 MW, 8,760 hours). Rainwater is harvested for the rest.</p>
+      <p>Drought orders in Ille-et-Vilaine (2022, 2023, June 2026) do not touch the campus. Loi 2026-403 lets authorities refuse permits where water is under structural stress; a dry-cooled campus gives them no reason to.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="heat">
+  <div class="wrap">
+    <h2>Heat</h2>
+    <p class="intro">Waste heat from the engines (jacket and exhaust) and from the buildings (liquid-cooled racks give 40 to 60 °C water) goes into the existing biomass loop on the industrial site (8 MW, 3 km, 11 substations, 30 GWh a year; ENGIE says about 3,000 homes, about 2,000 gas-heated homes at this site's 14 MWh each) and then into an extended network.</p>
+    <div class="tablewrap" style="margin-top:24px">
+      <table class="data">
+        <thead><tr><th>Phase</th><th>Heat delivered</th><th>Customers</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Phase 1, at opening</td><td>50 GWh a year: about 20 GWh for the industrial site and about 30 GWh for a first residential extension, about 2,000 homes <span class="derived">(derived)</span></td><td>The factory and the nearest streets of the three communes</td><td>The existing 8 MW loop serves only the industrial site today, the factory and Bâtiment 78 (ENGIE, 15-year contract); the residential extension is new pipe. Subject to ENGIE, the factory and the Rennes Métropole concession.</td></tr>
+          <tr><td>Phase 2, years 3 to 5</td><td>Up to 300 GWh a year, about 20,000 gas-heated homes' worth <span class="derived">(derived: 300 GWh ÷ 14 MWh)</span></td><td>Every home offered a connection: the three communes first, then neighbouring communes as the Rennes Métropole concession sets</td><td>The three communes hold about 14,000 homes; the rest of the 20,000 are in the communes around them. Subject to the Rennes Métropole concession.</td></tr>
+        </tbody>
+      </table>
+      <p class="src">Who owns the network: residents and the communes hold 25 to 49% of the network company through a co-op, with a vote on each year's tariff; at phase 2 the co-op's share of the network margin is about €3M to €5M a year before the reserve rule (derived), at least 57.5% of it kept in reserve by law, and the main return to members is the lower tariff. Details on <a href="stake.html#coop">What the community owns</a>. Recoverable heat from the buildings alone is about 1,000 GWh a year (120 MW for 8,760 hours; nearly all the power drawn becomes heat), plus the engines' jacket and exhaust heat. 300 GWh is a demand-side figure: what the extended network is assumed to absorb across the seasons. A heat engineer must confirm it. Source: ENGIE Solutions, La Janais biomass boiler announcement (October 2023).</p>
+    </div>
+  </div>
+</section>
+
+<section class="band surface" id="tariff">
+  <div class="wrap split">
+    <div>
+      <h2>The tariff</h2>
+      <p class="intro">Why heating and not electricity: the campus cannot sell electricity to households; that is the supplier's role at the grid's price. It can sell heat at a price it sets. So the resident's benefit lands on the heating bill.</p>
+      <div class="tablewrap" style="margin-top:24px">
+        <table class="data">
+          <thead><tr><th>Zone</th><th>Price against gas</th><th>Saving on a 14 MWh home <span class="derived">(derived)</span></th></tr></thead>
+          <tbody>
+            <tr><td>Charter zone, the nearest streets</td><td>The lower of €54 per MWh (incl. 5.5% VAT, standing charge included in the comparison) or 50% of the gas price, for 15 years; subject to the Rennes Métropole concession</td><td>About €750 a year</td></tr>
+            <tr><td>Phase 1 customers</td><td>30% below the gas bill</td><td>About €450 a year</td></tr>
+            <tr><td>Phase 2 customers</td><td>At least 10% below the gas bill, guaranteed in the concession</td><td>About €150 a year</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="src" style="margin-top:14px">Apartments, most of Saint-Jacques-de-la-Lande's housing, use about half the heat of a house and save proportionally less; the <a href="community-en.html">address tool</a> states the saving by housing type.</p>
+    </div>
+    <div class="calc">
+      <h3>The arithmetic</h3>
+      <dl>
+        <dt>Average gas bill, 2025, 14,000 kWh (Effy)</dt><dd>€1,512</dd>
+        <dt>Which is, all in</dt><dd>€108 per MWh incl. VAT</dd>
+        <dt>Average heat-network price, 2024 (AMORCE), before tax</dt><dd>€104.7 per MWh</dd>
+        <dt>The same with 5.5% VAT</dt><dd>about €110.5 per MWh</dd>
+        <dt>A typical gas-heated house</dt><dd>14 MWh a year</dd>
+        <div class="line"></div>
+        <dt class="heat">Charter zone: €1,512 × 50%</dt><dd class="sum heat">€756, about €750 saved</dd>
+        <dt class="heat">Charter price: €108 × 50%</dt><dd class="heat">€54 per MWh, or half the gas price if lower</dd>
+        <dt class="heat">Phase 1: €1,512 × 30%</dt><dd class="sum heat">€454, about €450 saved</dd>
+        <dt class="heat">Phase 2: €1,512 × 10%</dt><dd class="sum heat">€151, about €150 saved</dd>
+      </dl>
+      <p class="small muted">Rounded; apartments at about half. All figures are derived and stay labelled until the concession tariff is written. The average network price (€110.5 with VAT) is level with the Effy gas baseline, so the Phase 2 discount is a price the concession sets, not an average the market happens to deliver: at least 10% off the gas bill, everywhere on the network. The campus underwrites that discount through the price at which it sells heat to the network company.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap split">
+    <div>
+      <h2>What the public meters show</h2>
+      <p class="intro">Each commitment has one instrument, and the readings are public.</p>
+    </div>
+    <div class="tablewrap">
+      <table class="data">
+        <thead><tr><th>Meter</th><th>Where</th><th>Proves</th></tr></thead>
+        <tbody>
+          <tr><td>Import and export</td><td>The grid operator's meter at the 90 kV substation</td><td>0 MW imported, every month; export 0 to 80 MW</td></tr>
+          <tr><td>Water</td><td>Campus intake</td><td>Under 10,000 m³ a year</td></tr>
+          <tr><td>Noise</td><td>A façade at le Bois Noir, the nearest home to a campus building</td><td>The level live on the page. The night background is measured at the façade before construction; after opening the acoustician measures the campus's contribution with everything running (residual-level method, NF S31-010) and publishes it every three months. Limit: at most 3 dB(A) above the pre-construction background, and 40 dB(A) at most on its own.</td></tr>
+          <tr><td>Heat delivered</td><td>Network head</td><td>GWh a year, by phase</td></tr>
+          <tr><td>CO₂</td><td>Annual report from audited fuel invoices</td><td>The trajectory</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band surface tight">
+  <div class="wrap split">
+    <div><h2>About this page</h2></div>
+    <div class="links">
+      <a href="becomes.html"><span>What it becomes</span><span>the site plan and the eight commitments</span></a>
+      <a href="register.html#o3"><span>Objection register</span><span>rows 3, 4 and 9 on power, emissions and generators</span></a>
+      <a href="site.html"><span>Site research</span><span>the 90 kV substation, the heat loop, the gas supply</span></a>
+      <a href="sources.html"><span>Sources</span><span>INSEE, AMORCE, Effy, ENGIE and the rest</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>A response to Build's Product – Neofirm technical challenge by Christian Shields · <a href="sources.html">Sources</a></p>
+  </div>
+</footer>
+</body>
+</html>
